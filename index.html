@@ -10,12 +10,15 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             color: #333;
         }
 
         header {
-            background-color: #007acc;
+            background-color: rgba(0, 122, 204, 0.8); /* Semi-transparent background */
             color: white;
             padding: 20px;
             text-align: center;
@@ -39,7 +42,7 @@
         nav a {
             text-decoration: none;
             color: white;
-            background-color: #007acc;
+            background-color: rgba(0, 122, 204, 0.8); /* Semi-transparent buttons */
             padding: 10px 20px;
             margin: 0 10px;
             border-radius: 5px;
@@ -48,27 +51,13 @@
         }
 
         nav a:hover {
-            background-color: #005fa3;
-        }
-
-        section {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        section h2 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
+            background-color: rgba(0, 95, 163, 0.8);
         }
 
         footer {
             text-align: center;
             padding: 10px;
-            background-color: #333;
+            background-color: rgba(51, 51, 51, 0.8); /* Semi-transparent footer */
             color: white;
             margin-top: 20px;
         }
@@ -86,35 +75,11 @@
     </header>
 
     <nav>
-        <a href="#team-introduction">Team Introduction</a>
-        <a href="#project-overview">Project Overview</a>
-        <a href="#business-case">Business Case</a>
-        <a href="#course-reflection">Course Reflection</a>
+        <a href="team-introduction.html">Team Introduction</a>
+        <a href="project-overview.html">Project Overview</a>
+        <a href="business-case.html">Business Case</a>
+        <a href="course-reflection.html">Course Reflection</a>
     </nav>
-
-    <section id="team-introduction">
-        <h2>Team Introduction</h2>
-        <p>Meet our diverse and talented team! Together, we bring a wide range of skills and perspectives to tackle challenges and create impactful projects.</p>
-        <p><a href="https://github.com/team-introduction">Learn more about the team</a></p>
-    </section>
-
-    <section id="project-overview">
-        <h2>Project Overview</h2>
-        <p>Discover the innovative projects we have worked on, from inception to implementation. Our projects focus on solving real-world problems with creative solutions.</p>
-        <p><a href="https://github.com/project-overview">Explore the projects</a></p>
-    </section>
-
-    <section id="business-case">
-        <h2>Business Case</h2>
-        <p>Understand the business rationale behind our projects, including objectives, benefits, and market analysis.</p>
-        <p><a href="https://github.com/business-case">Dive into the business case</a></p>
-    </section>
-
-    <section id="course-reflection">
-        <h2>Course Reflection</h2>
-        <p>Reflect on the journey of learning and growth during the course. Here, we share our key takeaways, lessons learned, and future aspirations.</p>
-        <p><a href="https://github.com/course-reflection">Read our reflections</a></p>
-    </section>
 
     <footer>
         <p>&copy; 2024 Your Name | Connect on <a href="https://github.com" style="color: #007acc; text-decoration: none;">GitHub</a></p>
