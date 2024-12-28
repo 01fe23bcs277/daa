@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Reflection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            color: #333;
+        }
+
+        /* Header Styling */
+        header {
+            background: #2a3d66;
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        section {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: #2a3d66;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        /* Team Member Links */
+        .team-links {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background: #4CAF50;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .team-member:hover {
+            background-color: #388e3c;
+            transform: scale(1.05);
+        }
+
+        .team-member:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .team-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .team-member {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Course Reflection</h1>
+        <p>Click on the names below to see their respective course reflections.</p>
+    </header>
+
+    <section>
+        <h2>Meet the Team</h2>
+        <p>Click on the team members' names to read their reflections on the course and its impact.</p>
+        
+        <div class="team-links">
+            <a href="vinaycoursereflection.html" class="team-member">Vinay</a>
+            <a href="puneetcoursereflection.html" class="team-member">Abhishek</a>
+            <a href="manishcoursereflection.html" class="team-member">Nina</a>
+            <a href="abhicoursereflection.html" class="team-member">John</a>
+        </div>
+    </section>
+</body>
+</html>
