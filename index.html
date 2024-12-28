@@ -1,89 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | GitHub</title>
+    <title>My Portfolio</title>
     <style>
+        /* General Styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your image */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #f9fafb;
             color: #333;
+            line-height: 1.6;
         }
 
+        /* Header */
         header {
-            background-color: rgba(0, 122, 204, 0.8); /* Semi-transparent background */
-            color: white;
-            padding: 20px;
+            background: linear-gradient(90deg, #0078D7, #00C6FF);
+            color: #fff;
+            padding: 2rem 0;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
         }
 
-        header p {
-            margin: 10px 0 0;
-            font-size: 1.2em;
-        }
-
+        /* Navigation Bar */
         nav {
-            margin: 20px auto;
+            background: #222;
             text-align: center;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         nav a {
+            color: #fff;
             text-decoration: none;
-            color: white;
-            background-color: rgba(0, 122, 204, 0.8); /* Semi-transparent buttons */
-            padding: 10px 20px;
-            margin: 0 10px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: bold;
             border-radius: 5px;
-            font-size: 1em;
-            transition: background-color 0.3s;
+            background: #444;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
         }
 
         nav a:hover {
-            background-color: rgba(0, 95, 163, 0.8);
+            background: #00C6FF;
+            color: #222;
         }
 
-        footer {
+        /* Section Styling */
+        section {
+            padding: 3rem 1.5rem;
+            background: #fff;
+            margin: 1rem 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            color: #0078D7;
+            margin-bottom: 1rem;
             text-align: center;
-            padding: 10px;
-            background-color: rgba(51, 51, 51, 0.8); /* Semi-transparent footer */
-            color: white;
-            margin-top: 20px;
+        }
+
+        section p, ul {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, #00C6FF, #0078D7);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
         }
 
         footer p {
             margin: 0;
+            font-size: 0.9rem;
         }
     </style>
 </head>
-
 <body>
     <header>
-        <h1>Welcome to My GitHub Portfolio</h1>
-        <p>Explore my projects, reflections, and contributions</p>
+        <h1>My Portfolio</h1>
     </header>
 
     <nav>
-        <a href="team-introduction.html">Team Introduction</a>
-        <a href="project-overview.html">Project Overview</a>
-        <a href="business-case.html">Business Case</a>
-        <a href="course-reflection.html">Course Reflection</a>
+        <div class="nav-links">
+            <a href="team_overview.html">Team Overview</a>
+            <a href="course_overview.html">Course Overview</a>
+            <a href="project_overview.html">Project Overview</a>
+            <a href="course_reflections.html">Course Reflections</a>
+        </div>
     </nav>
 
+    <section id="introduction">
+        <div class="container">
+            <h2>Introduction to Course</h2>
+            <p>This course focuses on the design and analysis of algorithms and their real-world applications. It bridges theoretical knowledge with practical implementation, enabling students to write, implement, and optimize algorithms using suitable data structures.</p>
+            <ul>
+                <li>Linear and Non-linear Data Structures</li>
+                <li>Sorting and Searching Algorithms</li>
+                <li>Graph Traversal Techniques</li>
+                <li>Real-time Applications in Navigation, Finance, and Networking</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="course-project">
+        <div class="container">
+            <h2>Course Project Introduction</h2>
+            <p>Our ambitious project aims to design and develop a smart city spanning 1500 square kilometers of city Solivita. By leveraging cutting-edge technologies, we strive to create a sustainable and citizen-centric urban environment.</p>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 Your Name | Connect on <a href="https://github.com" style="color: #007acc; text-decoration: none;">GitHub</a></p>
+        <p>&copy; 2024 My Portfolio. All rights reserved.</p>
     </footer>
 </body>
-
 </html>
