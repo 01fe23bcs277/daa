@@ -1,1 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pure Water Distribution System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e0f7fa; /* Light blue for a water theme */
+      color: #004d40; /* Deep green-blue for text */
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00796b; /* Teal for main headings */
+      text-shadow: 1px 1px 2px #004d40;
+    }
+
+    .description, .sdg {
+      background-color: #ffffff; /* White background for content */
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 77, 64, 0.2);
+      margin-top: 30px;
+      border: 2px solid #004d40; /* Green-blue border for emphasis */
+    }
+
+    .description h2, .sdg h2 {
+      color: #00796b; /* Teal subheadings */
+      border-bottom: 2px solid #004d40;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .description p, .sdg p {
+      font-size: 1.1em;
+      line-height: 1.8;
+    }
+
+    pre {
+      background-color: #e0f7fa; /* Light blue background for code */
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 1em;
+      color: #004d40; /* Green-blue text for code */
+      overflow-x: auto;
+      border: 1px solid #004d40; /* Add a subtle border */
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+    }
+
+    h3, h4 {
+      color: #004d40; /* Green-blue for smaller headings */
+      text-shadow: 0.5px 0.5px 1px #00796b;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #004d40; /* Match the text color */
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .waves {
+      background: linear-gradient(90deg, #4dd0e1, #26c6da, #00bcd4);
+      height: 150px;
+      border-radius: 0 0 50% 50% / 20%;
+      margin: 30px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Pure Water Distribution System</h1>
+    
+    <div class="waves"></div> <!-- Decorative wave section -->
+    
+    <div class="description">
+      <h2>Description:</h2>
+      <p>Pure Water Distribution ensures safe, clean, and reliable water supply to communities for sustainable living. This system focuses on efficient water resource management, equitable distribution, and maintaining high standards of purity for public health and environmental sustainability.</p>
+      
+      <h3>Owner:</h3>
+      <p>Manish V G</p>
+      
+      <h3>Probable Tools:</h3>
+      <ul>
+        <li>Kruskal's Algorithm</li>
+        <li>Prim's Algorithm</li>
+      </ul>
+      
+      <!-- Kruskal's Algorithm Code -->
+      <h4>Kruskal's Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Edge {
+    int src, dest, weight;
+};
+
+struct Subset {
+    int parent;
+    int rank;
+};
+
+int find(Subset subsets[], int i) {
+    if (subsets[i].parent != i) {
+        subsets[i].parent = find(subsets, subsets[i].parent);
+    }
+    return subsets[i].parent;
+}
+
+void Union(Subset subsets[], int x, int y) {
+    int xroot = find(subsets, x);
+    int yroot = find(subsets, y);
+
+    if (subsets[xroot].rank < subsets[yroot].rank) {
+        subsets[xroot].parent = yroot;
+    } else if (subsets[xroot].rank > subsets[yroot].rank) {
+        subsets[yroot].parent = xroot;
+    } else {
+        subsets[yroot].parent = xroot;
+        subsets[xroot].rank++;
+    }
+}
+
+bool compare(Edge e1, Edge e2) {
+    return e1.weight < e2.weight;
+}
+
+void kruskal(int V, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(), compare);
+
+    Subset* subsets = new Subset[V];
+    for (int v = 0; v < V; v++) {
+        subsets[v].parent = v;
+        subsets[v].rank = 0;
+    }
+
+    vector<Edge> result;
+
+    for (auto& edge : edges) {
+        int x = find(subsets, edge.src);
+        int y = find(subsets, edge.dest);
+
+        if (x != y) {
+            result.push_back(edge);
+            Union(subsets, x, y);
+        }
+    }
+
+    cout << "Edges in the Minimum Spanning Tree (MST):\n";
+    for (auto& edge : result) {
+        cout << edge.src << " - " << edge.dest << " : " << edge.weight << endl;
+    }
+
+    delete[] subsets;
+}
+
+int main() {
+    int V, E;
+
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+    cout << "Enter the number of edges: ";
+    cin >> E;
+
+    vector<Edge> edges(E);
+
+    cout << "Enter each edge in the format: src dest weight\n";
+    for (int i = 0; i < E; i++) {
+        cin >> edges[i].src >> edges[i].dest >> edges[i].weight;
+    }
+
+    kruskal(V, edges);
+
+    return 0;
+}
+
+      </code></pre>
+
+      <!-- Prim's Algorithm Code -->
+      <h4>Prim's Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+struct Edge {
+    int src, dest, weight;
+};
+
+int minKey(vector<int>& key, vector<bool>& inMST, int V) {
+    int min = INT_MAX, minIndex;
+
+    for (int v = 0; v < V; v++) {
+        if (!inMST[v] && key[v] < min) {
+            min = key[v];
+            minIndex = v;
+        }
+    }
+    return minIndex;
+}
+
+void primMST(vector<Edge>& edges, int V) {
+    vector<vector<int>> graph(V, vector<int>(V, 0));
+
+    for (auto& edge : edges) {
+        graph[edge.src][edge.dest] = edge.weight;
+        graph[edge.dest][edge.src] = edge.weight;
+    }
+
+    vector<int> key(V, INT_MAX);
+    vector<bool> inMST(V, false);
+    vector<int> parent(V, -1);
+
+    key[0] = 0;
+
+    for (int count = 0; count < V - 1; count++) {
+        int u = minKey(key, inMST, V);
+        inMST[u] = true;
+
+        for (int v = 0; v < V; v++) {
+            if (graph[u][v] && !inMST[v] && graph[u][v] < key[v]) {
+                key[v] = graph[u][v];
+                parent[v] = u;
+            }
+        }
+    }
+
+    cout << "Edge   Weight\n";
+    for (int i = 1; i < V; i++) {
+        cout << parent[i] << " - " << i << "    " << graph[i][parent[i]] << endl;
+    }
+}
+
+int main() {
+    int V, E;
+
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+    cout << "Enter the number of edges: ";
+    cin >> E;
+
+    vector<Edge> edges(E);
+
+    cout << "Enter each edge in the format: src dest weight\n";
+    for (int i = 0; i < E; i++) {
+        cin >> edges[i].src >> edges[i].dest >> edges[i].weight;
+    }
+
+    primMST(edges, V);
+
+    return 0;
+}
+
+      </code></pre>
+    </div>
+
+    <!-- Related SDG Section -->
+    <div class="sdg">
+      <h2>Related SDG (Sustainable Development Goals):</h2>
+      <ul>
+        <li><strong>SDG 6: Clean Water and Sanitation</strong></li>
+        <p>Ensuring access to safe and clean water aligns with SDG 6, promoting sustainable water management and sanitation for all.</p>
+
+        <li><strong>SDG 11: Sustainable Cities and Communities</strong></li>
+        <p>Pure water distribution enhances urban sustainability, providing equitable access to resources for a better quality of life.</p>
+
+        <li><strong>SDG 13: Climate Action</strong></li>
+        <p>Efficient water management systems mitigate the effects of climate change and ensure water resource sustainability, contributing to SDG 13.</p>
+      </ul>
+    </div>
+
+    <div class="waves"></div> <!-- Decorative wave section -->
+
+  </div>
+
+</body>
+</html>
 
