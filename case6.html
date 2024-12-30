@@ -1,1 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Tourist Navigation System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .description {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+
+    .description h2 {
+      color: #4CAF50;
+    }
+
+    .description p {
+      font-size: 1.2em;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      color: #333;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+    }
+
+    h3 {
+      color: #333;
+    }
+
+    h4 {
+      color: #333;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #555;
+    }
+
+    .sdg {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+
+    .icon {
+      font-size: 50px;
+      color: #4CAF50;
+      text-align: center;
+    }
+
+    .sdg-icon {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .sdg-section {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Smart Tourist Navigation System</h1>
+
+    <div class="icon">
+      <i class="fas fa-map-pin"></i> <!-- Icon for navigation -->
+    </div>
+    
+    <div class="description">
+      <h2>Description:</h2>
+      <p>The Smart Tourist Navigation System is an efficient system designed to guide tourists with real-time directions and personalized recommendations. It uses advanced algorithms to enhance the tourist experience by providing seamless navigation and helping them discover points of interest based on their preferences and location.</p>
+      
+      <h3>Owner:</h3>
+      <p>Abhishek R S</p>
+      
+      <h3>Probable Tools:</h3>
+      <ul>
+        <li>Dijkstra’s Algorithm</li>
+        <li>Bellman-Ford Algorithm</li>
+        <li>Floyd’s Algorithm</li>
+      </ul>
+
+      <!-- Dijkstra's Algorithm Code -->
+      <h4>Dijkstra’s Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <vector>
+#include <climits>
+#include <queue>
+#include <utility>
+
+using namespace std;
+
+class Compare {
+public:
+    bool operator()(pair<int, int> p1, pair<int, int> p2) {
+        return p1.second > p2.second;
+    }
+};
+
+void dijkstraHeap(int** graph, int V, int src) {
+    vector<int> dist(V, INT_MAX);
+    vector<bool> visited(V, false);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> pq;
+
+    dist[src] = 0;
+    pq.push(make_pair(src, 0));
+
+    while (!pq.empty()) {
+        int u = pq.top().first;
+        pq.pop();
+
+        if (visited[u]) continue;
+        visited[u] = true;
+
+        for (int v = 0; v < V; v++) {
+            if (graph[u][v] != 0 && !visited[v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]) {
+                dist[v] = dist[u] + graph[u][v];
+                pq.push(make_pair(v, dist[v]));
+            }
+        }
+    }
+
+    cout << "Vertex\tDistance from Source" << endl;
+    for (int i = 0; i < V; i++) {
+        cout << i + 1 << "\t\t" << dist[i] << endl;
+    }
+}
+
+int main() {
+    int choice, source, edges, u, v, weight, V;
+
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+
+    int** graph = new int*[V];
+    for (int i = 0; i < V; i++) {
+        graph[i] = new int[V];
+    }
+
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            graph[i][j] = 0;
+        }
+    }
+
+    while (true) {
+        cout << "\nMenu:" << endl;
+        cout << "1. Enter Graph Edges" << endl;
+        cout << "2. Dijkstra's Algorithm using Min-Heap" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter number of edges: ";
+                cin >> edges;
+                cout << "Enter edges (u v weight): " << endl;
+                for (int i = 0; i < edges; i++) {
+                    cout << "Enter edge " << i + 1 << " (u v weight): ";
+                    cin >> u >> v >> weight;
+                    if (u >= 1 && u <= V && v >= 1 && v <= V) {
+                        graph[u - 1][v - 1] = weight;
+                        graph[v - 1][u - 1] = weight;
+                    } else {
+                        cout << "Invalid edge input! Vertex should be between 1 and " << V << endl;
+                    }
+                }
+                break;
+
+            case 2:
+                cout << "Enter source vertex (1-" << V << "): ";
+                cin >> source;
+                if (source >= 1 && source <= V) {
+                    dijkstraHeap(graph, V, source - 1);
+                } else {
+                    cout << "Invalid source vertex!" << endl;
+                }
+                break;
+
+            case 3:
+                cout << "Exiting program..." << endl;
+                for (int i = 0; i < V; i++) {
+                    delete[] graph[i];
+                }
+                delete[] graph;
+                return 0;
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
+
+      </code></pre>
+
+      <!-- Bellman-Ford Algorithm Code -->
+      <h4>Bellman-Ford Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <vector>
+#include <climits>
+
+using namespace std;
+
+class Edge {
+public:
+    int u, v, weight;
+    Edge(int u, int v, int weight) : u(u), v(v), weight(weight) {}
+};
+
+void bellmanFord(vector<Edge>& edges, int V, int E, int src) {
+    vector<int> dist(V, INT_MAX);
+    dist[src] = 0;
+
+    for (int i = 1; i <= V - 1; i++) {
+        for (int j = 0; j < E; j++) {
+            int u = edges[j].u;
+            int v = edges[j].v;
+            int weight = edges[j].weight;
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+            }
+        }
+    }
+
+    for (int i = 0; i < E; i++) {
+        int u = edges[i].u;
+        int v = edges[i].v;
+        int weight = edges[i].weight;
+        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+            cout << "Graph contains negative weight cycle" << endl;
+            return;
+        }
+    }
+
+    cout << "Vertex\tDistance from Source" << endl;
+    for (int i = 0; i < V; i++) {
+        cout << i + 1 << "\t\t" << dist[i] << endl;
+    }
+}
+
+int main() {
+    int V, E, u, v, weight;
+
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+
+    cout << "Enter the number of edges: ";
+    cin >> E;
+
+    vector<Edge> edges;
+
+    cout << "Enter the edges (u v weight): " << endl;
+    for (int i = 0; i < E; i++) {
+        cin >> u >> v >> weight;
+        edges.push_back(Edge(u - 1, v - 1, weight));
+    }
+
+    int source;
+    cout << "Enter the source vertex (1-" << V << "): ";
+    cin >> source;
+    source--;
+
+    bellmanFord(edges, V, E, source);
+
+    return 0;
+}
+
+      </code></pre>
+
+      <!-- Floyd's Algorithm Code -->
+      <h4>Floyd’s Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <climits>
+
+using namespace std;
+
+void floydWarshall(int **graph, int V) {
+    int **dist = new int*[V];
+    for (int i = 0; i < V; i++) {
+        dist[i] = new int[V];
+        for (int j = 0; j < V; j++) {
+            if (graph[i][j] == 0 && i != j)
+                dist[i][j] = INT_MAX;
+            else
+                dist[i][j] = graph[i][j];
+        }
+    }
+
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX &&
+                    dist[i][j] > dist[i][k] + dist[k][j]) {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+
+    cout << "Shortest distances between every pair of vertices:\n";
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (dist[i][j] == INT_MAX)
+                cout << "INF ";
+            else
+                cout << dist[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    for (int i = 0; i < V; i++)
+        delete[] dist[i];
+    delete[] dist;
+}
+
+int main() {
+    int V;
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+
+    int **graph = new int*[V];
+    for (int i = 0; i < V; i++)
+        graph[i] = new int[V];
+
+    cout << "Enter the adjacency matrix (0 for no edge):\n";
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            cin >> graph[i][j];
+        }
+    }
+
+    floydWarshall(graph, V);
+
+    for (int i = 0; i < V; i++)
+        delete[] graph[i];
+    delete[] graph;
+
+    return 0;
+}
+
+      </code></pre>
+    </div>
+
+    <!-- Related SDG Section -->
+    <div class="sdg">
+      <h2>Related SDG (Sustainable Development Goals):</h2>
+      <ul>
+        <li><strong class="sdg-section">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/SDG_8.svg" class="sdg-icon" alt="SDG 8" />
+          SDG 8: Decent Work and Economic Growth
+        </strong></li>
+        <p>This system promotes economic growth by supporting the tourism industry, creating job opportunities, and facilitating local businesses. By improving navigation and tourist experiences, it directly contributes to job creation in the tech, hospitality, and transportation sectors.</p>
+
+        <li><strong>SDG 9: Industry, Innovation, and Infrastructure</strong></li>
+        <p>The system fosters innovation by utilizing cutting-edge technology for real-time navigation and personalized recommendations. It promotes the development of smart infrastructure, contributing to sustainable urban development and innovation in tourism.</p>
+
+        <li><strong>SDG 11: Sustainable Cities and Communities</strong></li>
+        <p>The system helps improve urban mobility and accessibility for tourists, contributing to the creation of sustainable cities. By integrating transportation and tourism data, it enhances the overall experience while reducing congestion and improving resource management.</p>
+      </ul>
+    </div>
+
+  </div>
+
+</body>
+</html>
 
