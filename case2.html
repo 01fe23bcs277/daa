@@ -1,1 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disaster Management System Description</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .description {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+
+    .description h2 {
+      color: #4CAF50;
+    }
+
+    .description p {
+      font-size: 1.2em;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      color: #333;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+    }
+
+    h3 {
+      color: #333;
+    }
+
+    h4 {
+      color: #333;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #555;
+    }
+
+    .sdg {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Disaster Management System</h1>
+    
+    <div class="description">
+      <h2>Description:</h2>
+      <p>A disaster management system is a comprehensive framework designed to anticipate, prevent, and address the impacts of disasters, ensuring safety and recovery. It leverages advanced technologies and methodologies to enhance preparedness, mitigate risks, and streamline response and recovery operations.</p>
+      
+      <h3>Owner:</h3>
+      <p>Puneet Gadade</p>
+      
+      <h3>Probable Tools:</h3>
+      <ul>
+        <li>Breadth-First Search (BFS)</li>
+        <li>Dijkstra's Algorithm</li>
+      </ul>
+     
+
+
+<!-- BFS Algorithm Code -->
+<h4>Breadth-First Search (BFS) Algorithm (C++ Code):</h4>
+<pre><code>
+#include <iostream>
+using namespace std;
+
+void bfs(int m[10][10], int v, int source) {
+    int queue[20];
+    int front = 0, rear = 0, u, i;
+    int visited[10];
+
+    for (i = 0; i < v; i++)
+        visited[i] = 0;
+
+    queue[rear] = source;
+    visited[source] = 1;
+
+    cout << "The BFS Traversal is... \n";
+
+    while (front <= rear) {
+        u = queue[front];
+        cout << u << "\t";
+        front++;
+
+        for (i = 0; i < v; i++) {
+            if (m[u][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                rear++;
+                queue[rear] = i;
+            }
+        }
+    }
+}
+
+int main() {
+    int v = 5;
+    int m[10][10] = {{0,1,1,0,0}, {1,0,0,1,1},
+        {1,0,0,0,1}, {0,1,0,0,0}, {0,1,1,0,0}};
+
+    int source;
+    cout << "Enter the source vertex: ";
+    cin >> source;
+
+    bfs(m, v, source);
+
+    return 0;
+}
+
+</code></pre>
+
+      <!-- Dijkstra's Algorithm Code -->
+      <h4>Dijkstra's Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <vector>
+#include <climits>
+#include <queue>
+#include <utility>
+
+using namespace std;
+
+// Comparator function for the priority queue to work as a min-heap
+class Compare {
+public:
+    bool operator()(pair<int, int> p1, pair<int, int> p2) {
+        return p1.second > p2.second;  // Compare by the second value (distance)
+    }
+};
+
+// Dijkstra's algorithm using a min-heap (priority queue)
+void dijkstraHeap(int** graph, int V, int src) {
+    vector<int> dist(V, INT_MAX);  // Distance array, initialized to infinity
+    vector<bool> visited(V, false);  // Visited array to track processed nodes
+    priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> pq;  // Min-heap
+
+    dist[src] = 0;  // Distance to source is 0
+    pq.push(make_pair(src, 0));  // Push the source node into the heap
+
+    while (!pq.empty()) {
+        int u = pq.top().first;  // Get the vertex with the minimum distance
+        pq.pop();  // Remove it from the heap
+
+        if (visited[u]) continue;  // Skip if the node is already visited
+        visited[u] = true;  // Mark the node as visited
+
+        // Update the distances of adjacent vertices
+        for (int v = 0; v < V; v++) {
+            if (graph[u][v] != 0 && !visited[v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]) {
+                dist[v] = dist[u] + graph[u][v];  // Relax the edge
+                pq.push(make_pair(v, dist[v]));  // Push the updated distance into the heap
+            }
+        }
+    }
+
+    // Print the final distances
+    cout << "Vertex\tDistance from Source" << endl;
+    for (int i = 0; i < V; i++) {
+        cout << i + 1 << "\t\t" << dist[i] << endl;  // Print distances, with vertices starting from 1
+    }
+}
+
+int main() {
+    int choice, source, edges, u, v, weight, V;
+
+    cout << "Enter the number of vertices: ";
+    cin >> V;  // Allow user to specify the number of vertices
+
+    // Dynamically allocate memory for the graph
+    int** graph = new int*[V];
+    for (int i = 0; i < V; i++) {
+        graph[i] = new int[V];
+    }
+
+    // Initialize the graph with zeros (no edges)
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            graph[i][j] = 0;
+        }
+    }
+
+    while (true) {
+        cout << "\nMenu:" << endl;
+        cout << "1. Enter Graph Edges" << endl;
+        cout << "2. Dijkstra's Algorithm using Min-Heap" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter number of edges: ";
+                cin >> edges;
+                cout << "Enter edges (u v weight): " << endl;
+                for (int i = 0; i < edges; i++) {
+                    cout << "Enter edge " << i + 1 << " (u v weight): ";
+                    cin >> u >> v >> weight;
+                    if (u >= 1 && u <= V && v >= 1 && v <= V) {  // Ensure the nodes are within the valid range (1 to V)
+                        graph[u - 1][v - 1] = weight;
+                        graph[v - 1][u - 1] = weight;  // For undirected graph, adjust for 0-based indexing
+                    } else {
+                        cout << "Invalid edge input! Vertex should be between 1 and " << V << endl;
+                    }
+                }
+                break;
+
+            case 2:
+                cout << "Enter source vertex (1-" << V << "): ";
+                cin >> source;
+                if (source >= 1 && source <= V) {
+                    dijkstraHeap(graph, V, source - 1);  // Adjust for 0-based indexing
+                } else {
+                    cout << "Invalid source vertex!" << endl;
+                }
+                break;
+
+            case 3:
+                cout << "Exiting program..." << endl;
+                // Free dynamically allocated memory for the graph
+                for (int i = 0; i < V; i++) {
+                    delete[] graph[i];
+                }
+                delete[] graph;
+                return 0;
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
+
+      </code></pre>
+    </div>
+
+    <!-- Related SDG Section -->
+    <div class="sdg">
+      <h2>Related SDG (Sustainable Development Goals):</h2>
+      <ul>
+        <li><strong>SDG 11: Sustainable Cities and Communities</strong></li>
+        <p>Disaster management systems enhance urban resilience, ensuring preparedness and minimizing the impact of disasters. This aligns with SDG 11 by promoting sustainable cities capable of effectively handling natural and human-made disasters.</p>
+
+        <li><strong>SDG 13: Climate Action</strong></li>
+        <p>Proactive disaster management contributes to SDG 13 by mitigating the effects of climate change and ensuring adaptive strategies for managing extreme weather events and other climate-related risks.</p>
+
+        <li><strong>SDG 16: Peace, Justice, and Strong Institutions</strong></li>
+        <p>Efficient disaster management systems build trust in institutions by ensuring transparency, accountability, and swift action during emergencies, contributing to SDG 16.</p>
+      </ul>
+    </div>
+
+  </div>
+
+</body>
+</html>
 
