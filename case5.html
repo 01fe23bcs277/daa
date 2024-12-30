@@ -1,1 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Waste Management System</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eaf2d3; /* Soft green background for a nature feel */
+      color: #333;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #ffffff; /* Clean white container */
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50; /* Green color to match eco-theme */
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      background-color: #f8f8f8;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .description h2 {
+      color: #388e3c; /* Darker green for headings */
+      font-size: 1.8em;
+    }
+
+    .description p {
+      font-size: 1.2em;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    pre {
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      color: #333;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+    }
+
+    h3 {
+      color: #388e3c;
+      font-size: 1.4em;
+      margin-top: 20px;
+    }
+
+    h4 {
+      color: #388e3c;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #555;
+    }
+
+    .sdg {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 40px;
+    }
+
+    .sdg ul {
+      padding-left: 20px;
+    }
+
+    .sdg img {
+      width: 35px;
+      height: 35px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      display: inline-block;
+      background-color: #4CAF50;
+      border-radius: 50%;
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+      margin-right: 15px;
+    }
+
+    .sdg li {
+      margin-bottom: 15px;
+    }
+
+    .sdg li strong {
+      font-size: 1.1em;
+      color: #388e3c;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 15px;
+      background-color: #388e3c;
+      color: #fff;
+      border-radius: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Green Waste Management</h1>
+    
+    <div class="description">
+      <h2>Description:</h2>
+      <p>Green Waste Management focuses on sustainable waste disposal, recycling, and minimizing environmental impact through eco-friendly practices. The goal is to manage waste generated from organic sources such as plant matter, food scraps, and yard debris by turning them into compost or energy, promoting environmental sustainability.</p>
+      
+      <h3>Owner:</h3>
+      <p>Vinay Swarup</p>
+      
+      <h3>Probable Tools:</h3>
+      <ul>
+        <li>Breadth-First Search (BFS)</li>
+        <li>Dijkstra's Algorithm</li>
+      </ul>
+      
+      <!-- BFS Algorithm Code -->
+      <h4>Breadth-First Search (BFS) Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+using namespace std;
+
+void bfs(int m[10][10], int v, int source) {
+    int queue[20];
+    int front = 0, rear = 0, u, i;
+    int visited[10];
+
+    for (i = 0; i < v; i++)
+        visited[i] = 0;
+
+    queue[rear] = source;
+    visited[source] = 1;
+
+    cout << "The BFS Traversal is... \n";
+
+    while (front <= rear) {
+        u = queue[front];
+        cout << u << "\t";
+        front++;
+
+        for (i = 0; i < v; i++) {
+            if (m[u][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                rear++;
+                queue[rear] = i;
+            }
+        }
+    }
+}
+
+int main() {
+    int v = 5;
+    int m[10][10] = {{0,1,1,0,0}, {1,0,0,1,1},
+        {1,0,0,0,1}, {0,1,0,0,0}, {0,1,1,0,0}};
+
+    int source;
+    cout << "Enter the source vertex: ";
+    cin >> source;
+
+    bfs(m, v, source);
+
+    return 0;
+}
+
+
+      </code></pre>
+
+      <!-- Dijkstra's Algorithm Code -->
+      <h4>Dijkstra’s Algorithm (C++ Code):</h4>
+      <pre><code>
+#include <iostream>
+#include <vector>
+#include <climits>
+#include <queue>
+#include <utility>
+
+using namespace std;
+
+class Compare {
+public:
+    bool operator()(pair<int, int> p1, pair<int, int> p2) {
+        return p1.second > p2.second;
+    }
+};
+
+void dijkstraHeap(int** graph, int V, int src) {
+    vector<int> dist(V, INT_MAX);
+    vector<bool> visited(V, false);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> pq;
+
+    dist[src] = 0;
+    pq.push(make_pair(src, 0));
+
+    while (!pq.empty()) {
+        int u = pq.top().first;
+        pq.pop();
+
+        if (visited[u]) continue;
+        visited[u] = true;
+
+        for (int v = 0; v < V; v++) {
+            if (graph[u][v] != 0 && !visited[v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]) {
+                dist[v] = dist[u] + graph[u][v];
+                pq.push(make_pair(v, dist[v]));
+            }
+        }
+    }
+
+    cout << "Vertex\tDistance from Source" << endl;
+    for (int i = 0; i < V; i++) {
+        cout << i + 1 << "\t\t" << dist[i] << endl;
+    }
+}
+
+int main() {
+    int choice, source, edges, u, v, weight, V;
+
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+
+    int** graph = new int*[V];
+    for (int i = 0; i < V; i++) {
+        graph[i] = new int[V];
+    }
+
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            graph[i][j] = 0;
+        }
+    }
+
+    while (true) {
+        cout << "\nMenu:" << endl;
+        cout << "1. Enter Graph Edges" << endl;
+        cout << "2. Dijkstra's Algorithm using Min-Heap" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter number of edges: ";
+                cin >> edges;
+                cout << "Enter edges (u v weight): " << endl;
+                for (int i = 0; i < edges; i++) {
+                    cout << "Enter edge " << i + 1 << " (u v weight): ";
+                    cin >> u >> v >> weight;
+                    if (u >= 1 && u <= V && v >= 1 && v <= V) {
+                        graph[u - 1][v - 1] = weight;
+                        graph[v - 1][u - 1] = weight;
+                    } else {
+                        cout << "Invalid edge input! Vertex should be between 1 and " << V << endl;
+                    }
+                }
+                break;
+
+            case 2:
+                cout << "Enter source vertex (1-" << V << "): ";
+                cin >> source;
+                if (source >= 1 && source <= V) {
+                    dijkstraHeap(graph, V, source - 1);
+                } else {
+                    cout << "Invalid source vertex!" << endl;
+                }
+                break;
+
+            case 3:
+                cout << "Exiting program..." << endl;
+                for (int i = 0; i < V; i++) {
+                    delete[] graph[i];
+                }
+                delete[] graph;
+                return 0;
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
+
+
+      </code></pre>
+    </div>
+
+    <!-- Related SDG Section -->
+    <div class="sdg">
+      <h2>Related SDG (Sustainable Development Goals):</h2>
+      <ul>
+        <li><strong>SDG 12: Responsible Consumption and Production</strong></li>
+        <p>This SDG emphasizes sustainable consumption and production practices. Green Waste Management contributes to this by promoting recycling, reducing waste, and creating eco-friendly products from green waste.</p>
+
+        <li><strong>SDG 13: Climate Action</strong></li>
+        <p>Green Waste Management reduces the environmental impact of waste by promoting composting and recycling. These practices help lower greenhouse gas emissions, contributing to climate action.</p>
+
+        <li><strong>SDG 15: Life on Land</strong></li>
+        <p>This SDG focuses on the conservation of land ecosystems. Green Waste Management promotes composting and organic recycling, helping maintain soil health and contributing to land sustainability.</p>
+
+        <li><strong>SDG 11: Sustainable Cities and Communities</strong></li>
+        <p><img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/SDG_11_logo.svg/256px-SDG_11_logo.svg.png" alt="SDG 11">SDG 11 aims to make cities and human settlements inclusive, safe, resilient, and sustainable. Green Waste Management helps create sustainable urban environments by reducing waste and promoting cleaner, greener cities.</p>
+
+        <li><strong>SDG 17: Partnerships for the Goals</strong></li>
+        <p>Green Waste Management can foster partnerships among governments, businesses, and local communities to implement sustainable practices and support the achievement of the SDGs.</p>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2024 Green Waste Management Initiative | All Rights Reserved</p>
+  </div>
+
+</body>
+</html>
 
