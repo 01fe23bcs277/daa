@@ -1,1 +1,133 @@
+#include <iostream>
+#include <vector>
+#include <limits.h>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+// Define the structure for an edge
+struct Edge {
+    string src, dest;
+    int weight;
+};
+
+// Function to print distances
+void printDistances(const vector<int> &dist, const vector<string> &locations, const string &source) {
+    cout << "\nShortest distances from \"" << source << "\":\n";
+    for (size_t i = 0; i < locations.size(); ++i) {
+        if (dist[i] == INT_MAX) {
+            cout << "To \"" << locations[i] << "\": INF\n";
+        } else {
+            cout << "To \"" << locations[i] << "\": " << dist[i] << " km\n";
+        }
+    }
+}
+
+// Single Source Shortest Path using Dijkstra's Algorithm
+void findShortestPathFromHotel(vector<vector<int>> &graph, int src, const vector<string> &locations) {
+    int V = graph.size();
+    vector<int> dist(V, INT_MAX);
+    vector<bool> visited(V, false);
+
+    dist[src] = 0;
+
+    for (int i = 0; i < V - 1; ++i) {
+        int u = -1;
+
+        for (int j = 0; j < V; ++j)
+            if (!visited[j] && (u == -1 || dist[j] < dist[u]))
+                u = j;
+
+        visited[u] = true;
+
+        for (int v = 0; v < V; ++v)
+            if (graph[u][v] && !visited[v] && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+    }
+
+    printDistances(dist, locations, locations[src]);
+}
+
+// Single Source Shortest Path with Negative Weights using Bellman-Ford
+void planTourWithOffers(vector<Edge> &edges, int V, const vector<string> &locations, const string &source) {
+    vector<int> dist(V, INT_MAX);
+    int srcIndex = find(locations.begin(), locations.end(), source) - locations.begin();
+    dist[srcIndex] = 0;
+
+    for (int i = 1; i <= V - 1; ++i) {
+        for (auto &edge : edges) {
+            int u = find(locations.begin(), locations.end(), edge.src) - locations.begin();
+            int v = find(locations.begin(), locations.end(), edge.dest) - locations.begin();
+            if (dist[u] != INT_MAX && dist[u] + edge.weight < dist[v])
+                dist[v] = dist[u] + edge.weight;
+        }
+    }
+
+    for (auto &edge : edges) {
+        int u = find(locations.begin(), locations.end(), edge.src) - locations.begin();
+        int v = find(locations.begin(), locations.end(), edge.dest) - locations.begin();
+        if (dist[u] != INT_MAX && dist[u] + edge.weight < dist[v]) {
+            cout << "\nGraph contains negative weight cycle!\n";
+            return;
+        }
+    }
+
+    printDistances(dist, locations, source);
+}
+
+// All Pairs Shortest Path using Floyd-Warshall
+void discoverAllLocations(vector<vector<int>> &graph, const vector<string> &locations) {
+    int V = graph.size();
+    vector<vector<int>> dist = graph;
+
+    for (int k = 0; k < V; ++k)
+        for (int i = 0; i < V; ++i)
+            for (int j = 0; j < V; ++j)
+                if (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX && dist[i][k] + dist[k][j] < dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+
+    cout << "\nShortest paths between all locations:\n";
+    for (size_t i = 0; i < locations.size(); ++i) {
+        cout << locations[i] << ":\n";
+        for (size_t j = 0; j < locations.size(); ++j)
+            cout << "  To " << locations[j] << ": "
+                 << (dist[i][j] == INT_MAX ? "INF" : to_string(dist[i][j]) + " km") << "\n";
+        cout << "\n";
+    }
+}
+
+int main() {
+    // Locations (nodes)
+    vector<string> locations = {"Hotel Grand", "City Park", "Historical Museum", "Downtown Mall", "Sunset Beach"};
+
+    // Graph represented as adjacency matrix
+    vector<vector<int>> graph = {
+        {0, 3, 6, 4, 12},
+        {3, 0, 2, 5, 10},
+        {6, 2, 0, 4, 8},
+        {4, 5, 4, 0, 6},
+        {12, 10, 8, 6, 0}
+    };
+
+    // Graph represented as edge list (for Bellman-Ford)
+    vector<Edge> edges = {
+        {"Hotel Grand", "City Park", 3}, {"City Park", "Historical Museum", 1}, // Discount applied
+        {"Historical Museum", "Downtown Mall", 4}, {"Downtown Mall", "Sunset Beach", 8}, // Penalty applied
+        {"Sunset Beach", "Hotel Grand", 12}
+    };
+
+    // Test cases
+    cout << "Smart Tourist Navigation System\n";
+
+    // Find shortest path from "Hotel Grand" to all locations using Dijkstra's
+    findShortestPathFromHotel(graph, 0, locations);
+
+    // Find shortest path with negative weights using Bellman-Ford
+    planTourWithOffers(edges, locations.size(), locations, "Hotel Grand");
+
+    // Find shortest paths between all locations using Floyd-Warshall
+    discoverAllLocations(graph, locations);
+
+    return 0;
+}
 
