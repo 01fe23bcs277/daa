@@ -98,36 +98,64 @@ void discoverAllLocations(vector<vector<int>> &graph, const vector<string> &loca
 
 int main() {
     // Locations (nodes)
-    vector<string> locations = {"Hotel Grand", "City Park", "Historical Museum", "Downtown Mall", "Sunset Beach"};
+    vector<string> locations;
+    int n;
+
+    cout << "Enter the number of locations: ";
+    cin >> n;
+
+    cout << "Enter the names of the locations:\n";
+    for (int i = 0; i < n; ++i) {
+        string loc;
+        cin >> loc;
+        locations.push_back(loc);
+    }
 
     // Graph represented as adjacency matrix
-    vector<vector<int>> graph = {
-        {0, 3, 6, 4, 12},
-        {3, 0, 2, 5, 10},
-        {6, 2, 0, 4, 8},
-        {4, 5, 4, 0, 6},
-        {12, 10, 8, 6, 0}
-    };
+    vector<vector<int>> graph(n, vector<int>(n, INT_MAX));
+    cout << "\nEnter the distances between locations (enter -1 if no direct path exists):\n";
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i == j) {
+                graph[i][j] = 0;
+                continue;
+            }
+            cout << "Distance from " << locations[i] << " to " << locations[j] << ": ";
+            int dist;
+            cin >> dist;
+            if (dist != -1) {
+                graph[i][j] = dist;
+            }
+        }
+    }
 
     // Graph represented as edge list (for Bellman-Ford)
-    vector<Edge> edges = {
-        {"Hotel Grand", "City Park", 3}, {"City Park", "Historical Museum", 1}, // Discount applied
-        {"Historical Museum", "Downtown Mall", 4}, {"Downtown Mall", "Sunset Beach", 8}, // Penalty applied
-        {"Sunset Beach", "Hotel Grand", 12}
-    };
+    vector<Edge> edges;
+    cout << "\nEnter the edges (source, destination, weight) and type 'done' to finish:\n";
+    while (true) {
+        string src, dest;
+        int weight;
+        cout << "Source: ";
+        cin >> src;
+        if (src == "done") break;
+        cout << "Destination: ";
+        cin >> dest;
+        cout << "Weight: ";
+        cin >> weight;
+        edges.push_back({src, dest, weight});
+    }
 
     // Test cases
     cout << "Smart Tourist Navigation System\n";
 
-    // Find shortest path from "Hotel Grand" to all locations using Dijkstra's
+    // Find shortest path from first location to all others using Dijkstra's
     findShortestPathFromHotel(graph, 0, locations);
 
     // Find shortest path with negative weights using Bellman-Ford
-    planTourWithOffers(edges, locations.size(), locations, "Hotel Grand");
+    planTourWithOffers(edges, locations.size(), locations, locations[0]);
 
     // Find shortest paths between all locations using Floyd-Warshall
     discoverAllLocations(graph, locations);
 
     return 0;
 }
-
